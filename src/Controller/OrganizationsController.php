@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Organizations;
 use App\Form\OrganizationsType;
 use App\Model\OrganizationsListResponse;
+use App\Model\ErrorResponse;
 use App\Service\OrganizationsService;
 use Doctrine\Persistence\ManagerRegistry;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -42,7 +43,7 @@ class OrganizationsController extends AbstractController
      * @OA\Response(
      *     response=404,
      *     description="Возвращает при отсутствии записи",
-     *     @Model(type=OrganizationsListResponse::class)
+     *     @Model(type=ErrorResponse::class)
      *     )
      * )
      * @param ManagerRegistry $doctrine
@@ -82,6 +83,11 @@ class OrganizationsController extends AbstractController
      *     response=200,
      *     description="Возвращает при успехе",
      *     @Model(type=OrganizationsListResponse::class)
+     * )
+     * @OA\Response(
+     *     response=404,
+     *     description="Возвращает при отсутствии записи",
+     *     @Model(type=ErrorResponse::class)
      * )
      */
     #[Route(path: '/api/v1/listOrganizations', methods: ['GET'])]

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Projects;
 use App\Form\ProjectsType;
 use App\Model\ProjectsListResponse;
+use App\Model\ErrorResponse;
 use App\Service\ProjectsService;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
@@ -44,7 +45,7 @@ class ProjectsController extends AbstractController
      * @OA\Response(
      *     response=404,
      *     description="Возвращает при отсутствии записи",
-     *     @Model(type=ProjectsListResponse::class)
+     *     @Model(type=ErrorResponse::class)
      *     )
      * )
      *
@@ -92,10 +93,7 @@ class ProjectsController extends AbstractController
     #[Route(path: '/api/v1/listProjects', methods: ['GET'])]
     public function list(): Response
     {
-        $project = $this->json($this->projectsService->getProjects());
-        $project->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-
-        return $project;
+        return $this->json($this->projectsService->getProjects())->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -117,7 +115,7 @@ class ProjectsController extends AbstractController
      * @OA\Response(
      *     response=404,
      *     description="Возвращает при отсутствии записи",
-     *     @Model(type=ProjectsListResponse::class)
+     *     @Model(type=ErrorResponse::class)
      *     )
      * )
      * @param int $id
@@ -126,9 +124,6 @@ class ProjectsController extends AbstractController
     #[Route(path: '/api/v1/showProjects/{id}', methods: ['GET'])]
     public function show(int $id): Response
     {
-        $project = $this->json($this->projectsService->getProject($id));
-        $project->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-
-        return $project;
+        return $this->json($this->projectsService->getProject($id))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }
