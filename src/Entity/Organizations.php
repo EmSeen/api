@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Entity;
-
 
 use App\Repository\OrganizationsRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,26 +10,21 @@ class Organizations
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type:"integer")]
-    private ?int $id;
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
-    #[ORM\Column(type:"string", length: 255)]
-    private string $name;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $name = null;
 
-    #[ORM\Column(type:"string", length: 255)]
-    private string $designer;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $designer = null;
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -39,10 +32,11 @@ class Organizations
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
-    public function getDesigner(): string
+    public function getDesigner(): ?string
     {
         return $this->designer;
     }
@@ -50,7 +44,7 @@ class Organizations
     public function setDesigner(string $designer): self
     {
         $this->designer = $designer;
+
         return $this;
     }
-
 }

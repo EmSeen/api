@@ -7,20 +7,21 @@ use App\Model\OrganizationsListItems;
 use App\Model\OrganizationsListResponse;
 use App\Repository\OrganizationsRepository;
 use App\Service\OrganizationsService;
-use Doctrine\Common\Collections\Criteria;
-use PHPUnit\Framework\TestCase;
+use App\Tests\AbstractTestCase;
 
-class OrganizationsServiceTest extends TestCase
+class OrganizationsServiceTest extends AbstractTestCase
 {
 
     public function testGetOrganizations()
     {
+        $org = (new Organizations())->setName('Test')->setDesigner('test');
+        $this->setEntityId($org, 7);
+
         //Создание зависимостей в виде мока, задание им повидения
         $repository = $this->createMock(OrganizationsRepository::class);
         $repository->expects($this->once())
-            ->method('findBy')
-            ->with([], ['name' => Criteria::ASC])
-            ->willReturn([(new Organizations())->setId(7)->setName('Test')->setDesigner('test')]);
+            ->method('findAllSortedByName')
+            ->willReturn([$org]);
 
         //Создание реального кдасса
         $service = new OrganizationsService($repository);
@@ -30,4 +31,5 @@ class OrganizationsServiceTest extends TestCase
         //Сравнение с фактическим результатом
         $this->assertEquals($expected, $service->getOrganizations());
     }
+
 }

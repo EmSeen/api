@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Repository;
-
 
 use App\Entity\Projects;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -23,5 +21,18 @@ class ProjectsRepository extends ServiceEntityRepository
         parent::__construct($registry, Projects::class);
     }
 
+    public function projectsList()
+    {
+        $query = $this->_em->createQuery('SELECT p FROM App\Entity\Projects p');
 
+        return $query->getResult();
+    }
+
+    public function findProjectsById(int $id)
+    {
+        $query = $this->_em->createQuery('SELECT p FROM App\Entity\Projects p WHERE :id = p.id ');
+        $query->setParameter('id', $id);
+
+        return $query->getResult();
+    }
 }

@@ -1,54 +1,51 @@
 <?php
 
-namespace App\Entity;
+namespace App\Model;
 
-use App\Repository\ProjectsRepository;
 use DateTimeInterface;
-use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProjectsRepository::class)]
-class Projects
+class ProjectsListItems
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    private int $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $name = null;
+    private string $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $description = null;
+    private string $description;
 
-    #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $startDate;
 
-    #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $endDate;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function setId($id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName($name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription($description): self
     {
         $this->description = $description;
 
