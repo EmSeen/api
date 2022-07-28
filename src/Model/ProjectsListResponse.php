@@ -7,23 +7,23 @@ class ProjectsListResponse
     /**
      * @var ProjectsListItems[]
      */
-    private array $item;
+    private array $items;
 
     /**
      * OrganizationsListResponse constructor.
      *
-     * @param ProjectsListItems[] $item
+     * @param ProjectsListItems[] $items
      */
-    public function __construct(array $item)
+    public function __construct(array $items)
     {
-        $this->item = $item;
+        $this->items = $items;
     }
 
     /**
      * @return ProjectsListItems[]
      */
-    public function getItem(): array
+    public function getItems(): array
     {
-        return $this->item;
+        return $this->items;
     }
 }

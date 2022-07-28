@@ -7,9 +7,9 @@ use App\Model\OrganizationsListItems;
 use App\Model\OrganizationsListResponse;
 use App\Repository\OrganizationsRepository;
 use App\Service\OrganizationsService;
-use App\Tests\AbstractTestCase;
+use App\Tests\AbstractServiceTest;
 
-class OrganizationsServiceTest extends AbstractTestCase
+class OrganizationsServiceServiceTest extends AbstractServiceTest
 {
 
     public function testGetOrganizations()

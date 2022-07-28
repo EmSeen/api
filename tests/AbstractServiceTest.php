@@ -5,7 +5,7 @@ namespace App\Tests;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-class AbstractTestCase extends TestCase
+class AbstractServiceTest extends TestCase
 {
     protected function setEntityId(object $entity,int $value, $idField = 'id')
     {

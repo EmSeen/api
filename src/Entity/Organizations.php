@@ -11,20 +11,23 @@ class Organizations
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $designer = null;
+    private string $designer;
 
-    public function getId(): ?int
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $employees;
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -36,7 +39,7 @@ class Organizations
         return $this;
     }
 
-    public function getDesigner(): ?string
+    public function getDesigner(): string
     {
         return $this->designer;
     }
@@ -47,4 +50,17 @@ class Organizations
 
         return $this;
     }
+
+    public function getEmployees(): string
+    {
+        return $this->employees;
+    }
+
+    public function setEmployees(string $employees): self
+    {
+        $this->employees = $employees;
+
+        return $this;
+    }
+
 }

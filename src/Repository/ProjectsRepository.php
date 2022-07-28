@@ -35,4 +35,9 @@ class ProjectsRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+
+    public function existById(int $id): bool
+    {
+        return null !==$this->find($id);
+    }
 }

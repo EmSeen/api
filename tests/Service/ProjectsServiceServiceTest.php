@@ -5,17 +5,17 @@ namespace App\Tests\Service;
 use App\Exception\ProjectNotFoundException;
 use App\Repository\ProjectsRepository;
 use App\Service\ProjectsService;
-use App\Tests\AbstractTestCase;
+use App\Tests\AbstractServiceTest;
 
-class ProjectsServiceTest extends AbstractTestCase
+class ProjectsServiceServiceTest extends AbstractServiceTest
 {
     public function testGetProjectNotFound(): void
     {
         $projectsRepository = $this->createMock(ProjectsRepository::class);
         $projectsRepository->expects($this->once())
-            ->method('find')
+            ->method('existById')
             ->with(11)
-            ->willThrowException(new ProjectNotFoundException());
+            ->willReturn(false);
 
         $this->expectException(ProjectNotFoundException::class);
 

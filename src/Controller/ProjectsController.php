@@ -8,6 +8,7 @@ use App\Model\ProjectsListResponse;
 use App\Service\ProjectsService;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,7 +48,10 @@ class ProjectsController extends AbstractController
      *     )
      * )
      *
-     * @throws \Exception
+     * @param ManagerRegistry $doctrine
+     * @param Request $request
+     * @return Response
+     * @throws Exception
      */
     #[Route(path: '/api/v1/newProjects', methods: ['POST'])]
     public function new(ManagerRegistry $doctrine, Request $request): Response
@@ -55,14 +59,8 @@ class ProjectsController extends AbstractController
         $entityManager = $doctrine->getManager();
         $project = new Projects();
 
-//        $form = $this->createForm(ProjectsType::class, $project);
-//        $form->submit($request->request->all());
-
         $req = $request->request->count();
         if (0 === $req) {
-//            dump(new DateTime($request->query->get('startDate')));
-//            dump(new DateTime($request->request->get('startDate')));
-//            exit();
             $project->setName($request->query->get('name'));
             $project->setDescription($request->query->get('description'));
             $project->setStartDate(new DateTime($request->query->get('startDate')));
@@ -122,6 +120,8 @@ class ProjectsController extends AbstractController
      *     @Model(type=ProjectsListResponse::class)
      *     )
      * )
+     * @param int $id
+     * @return Response
      */
     #[Route(path: '/api/v1/showProjects/{id}', methods: ['GET'])]
     public function show(int $id): Response

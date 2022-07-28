@@ -45,6 +45,9 @@ class OrganizationsController extends AbstractController
      *     @Model(type=OrganizationsListResponse::class)
      *     )
      * )
+     * @param ManagerRegistry $doctrine
+     * @param Request $request
+     * @return Response
      */
     #[Route(path: '/api/v1/newOrganizations', methods: ['POST'])]
     public function new(ManagerRegistry $doctrine, Request $request): Response

@@ -26,9 +26,7 @@ class ProjectsService
 
     public function getProject(int $id): ProjectsListResponse
     {
-        $projectOrig = $this->projectsRepository->find($id);
-
-        if (null === $projectOrig) {
+        if (!$this->projectsRepository->existById($id)) {
             throw new ProjectNotFoundException();
         }
 

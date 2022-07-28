@@ -12,6 +12,9 @@ class OrganizationsListItems
 
     /**
      * OrganizationsListItems constructor.
+     * @param int $id
+     * @param string $name
+     * @param string $designer
      */
     public function __construct(int $id, string $name, string $designer)
     {
