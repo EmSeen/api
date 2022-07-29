@@ -2,18 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Projects;
-use App\Form\ProjectsType;
-use App\Model\ProjectsListResponse;
+use App\Attribute\RequestBody;
 use App\Model\ErrorResponse;
+use App\Model\ProjectRequest;
+use App\Model\ProjectsListResponse;
 use App\Service\ProjectsService;
-use DateTime;
-use Doctrine\Persistence\ManagerRegistry;
-use Exception;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,60 +20,35 @@ class ProjectsController extends AbstractController
     }
 
     /**
-     * Создание проектов.
+     * Создание проекта.
      *
      * @OA\Tag(name="Projects")
      *
-     * @OA\Parameter(name="form", in="query", description="Projects Type", @Model(type=ProjectsType::class))
+     * @OA\RequestBody(@Model(type=ProjectRequest::class))
      *
      * @OA\Response(
      *     response=200,
      *     description="Возвращает при успехе",
-     *     @Model(type=ProjectsListResponse::class)
+     *     @Model(type=ProjectRequest::class)
      *     )
      * ),
      * @OA\Response(
-     *     response=422,
+     *     response=400,
      *     description="Возвращает при неуспешном запросе",
-     *     @Model(type=ProjectsListResponse::class)
-     *     )
-     * ),
-     * @OA\Response(
-     *     response=404,
-     *     description="Возвращает при отсутствии записи",
      *     @Model(type=ErrorResponse::class)
      *     )
      * )
      *
-     * @param ManagerRegistry $doctrine
-     * @param Request $request
+     * @param ProjectRequest $projectRequest
      * @return Response
-     * @throws Exception
      */
-    #[Route(path: '/api/v1/newProjects', methods: ['POST'])]
-    public function new(ManagerRegistry $doctrine, Request $request): Response
+    #[Route(path: '/api/v1/newProject', methods: ['POST'])]
+    public function new(#[RequestBody] ProjectRequest $projectRequest): Response
     {
-        $entityManager = $doctrine->getManager();
-        $project = new Projects();
-
-        $req = $request->request->count();
-        if (0 === $req) {
-            $project->setName($request->query->get('name'));
-            $project->setDescription($request->query->get('description'));
-            $project->setStartDate(new DateTime($request->query->get('startDate')));
-            $project->setEndDate(new DateTime($request->query->get('endDate')));
-        } else {
-            $project->setName($request->request->get('name'));
-            $project->setDescription($request->request->get('description'));
-            $project->setStartDate(new DateTime($request->request->get('startDate')));
-            $project->setEndDate(new DateTime($request->request->get('endDate')));
-        }
-
-        $entityManager->persist($project);
-        $entityManager->flush();
-
-        return $this->json('Создана новая запись с id: '.$project->getId())->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        $this->projectsService->newProject($projectRequest);
+        return $this->json('Создана запись ' . $projectRequest)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
+
 
     /**
      * Список проектов.
@@ -89,6 +60,8 @@ class ProjectsController extends AbstractController
      *     description="Возвращает при успехе",
      *     @Model(type=ProjectsListResponse::class)
      * )
+     *
+     * @return Response
      */
     #[Route(path: '/api/v1/listProjects', methods: ['GET'])]
     public function list(): Response
@@ -106,22 +79,11 @@ class ProjectsController extends AbstractController
      *     description="Возвращает при успехе",
      *     @Model(type=ProjectsListResponse::class)
      * )
-     * @OA\Response(
-     *     response=422,
-     *     description="Возвращает при неуспешном запросе",
-     *     @Model(type=ProjectsListResponse::class)
-     *     )
-     * ),
-     * @OA\Response(
-     *     response=404,
-     *     description="Возвращает при отсутствии записи",
-     *     @Model(type=ErrorResponse::class)
-     *     )
-     * )
+     *
      * @param int $id
      * @return Response
      */
-    #[Route(path: '/api/v1/showProjects/{id}', methods: ['GET'])]
+    #[Route(path: '/api/v1/showProject/{id}', methods: ['GET'])]
     public function show(int $id): Response
     {
         return $this->json($this->projectsService->getProject($id))->setEncodingOptions(JSON_UNESCAPED_UNICODE);

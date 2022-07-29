@@ -6,11 +6,14 @@ use App\Entity\Projects;
 use App\Exception\ProjectNotFoundException;
 use App\Model\ProjectsListItems;
 use App\Model\ProjectsListResponse;
+use App\Model\ProjectRequest;
 use App\Repository\ProjectsRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProjectsService
 {
-    public function __construct(private ProjectsRepository $projectsRepository)
+    public function __construct(private ProjectsRepository $projectsRepository, private EntityManagerInterface $em)
     {
     }
 
@@ -36,6 +39,19 @@ class ProjectsService
                 $this->projectsRepository->findProjectsById($id)
             )
         );
+    }
+
+    public function newProject(ProjectRequest $projectsRequest): void
+    {
+        $project = new Projects();
+
+        $project->setName($projectsRequest->getName());
+        $project->setDescription($projectsRequest->getDescription());
+        $project->setStartDate($projectsRequest->getStartDate());
+        $project->setEndDate($projectsRequest->getEndDate());
+
+        $this->em->persist($project);
+        $this->em->flush();
     }
 
     private function map(Projects $projects): ProjectsListItems

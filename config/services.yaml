@@ -31,4 +31,8 @@ services:
 
     App\Listener\ApiExceptionListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.exception, priority: 10 }
+            - { name: kernel.event_listener, event: kernel.exception, priority: 1 }
+
+    App\Listener\ValidationExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, priority: 15 }

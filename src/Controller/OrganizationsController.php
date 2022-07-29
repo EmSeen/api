@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Attribute\RequestBody;
 use App\Entity\Organizations;
 use App\Form\OrganizationsType;
 use App\Model\OrganizationsListResponse;
 use App\Model\ErrorResponse;
+use App\Model\OrganizationsRequest;
 use App\Service\OrganizationsService;
 use Doctrine\Persistence\ManagerRegistry;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -26,52 +28,28 @@ class OrganizationsController extends AbstractController
      *
      * @OA\Tag(name="Organizations")
      *
-     * @OA\Parameter(name="form", in="query", description="Page number", @Model(type=OrganizationsType::class))
+     * @OA\RequestBody(@Model(type=OrganizationsRequest::class))
      *
      * @OA\Response(
      *     response=200,
      *     description="Возвращает при успехе",
-     *     @Model(type=OrganizationsListResponse::class)
+     *     @Model(type=OrganizationsRequest::class)
      *     )
      * ),
      * @OA\Response(
      *     response=422,
      *     description="Возвращает при неуспешном запросе",
-     *     @Model(type=OrganizationsListResponse::class)
-     *     )
-     * ),
-     * @OA\Response(
-     *     response=404,
-     *     description="Возвращает при отсутствии записи",
      *     @Model(type=ErrorResponse::class)
      *     )
      * )
-     * @param ManagerRegistry $doctrine
-     * @param Request $request
+     * @param OrganizationsRequest $organizationsRequest
      * @return Response
      */
-    #[Route(path: '/api/v1/newOrganizations', methods: ['POST'])]
-    public function new(ManagerRegistry $doctrine, Request $request): Response
+    #[Route(path: '/api/v1/newOrganization', methods: ['POST'])]
+    public function new(#[RequestBody] OrganizationsRequest $organizationsRequest): Response
     {
-        $entityManager = $doctrine->getManager();
-        $organizations = new Organizations();
-
-//        $form = $this->createForm(OrganizationsType::class, $organizations);
-//        $form->submit($request->request->all());
-
-        $req = $request->request->count();
-        if (0 === $req) {
-            $organizations->setName($request->query->get('name'));
-            $organizations->setDesigner($request->query->get('designer'));
-        } else {
-            $organizations->setName($request->request->get('name'));
-            $organizations->setDesigner($request->request->get('designer'));
-        }
-
-        $entityManager->persist($organizations);
-        $entityManager->flush();
-
-        return $this->json('Создана новая запись с id: '.$organizations->getId());
+        $this->organizationsService->newOrganization($organizationsRequest);
+        return $this->json('Создана запись ' . $organizationsRequest)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -83,11 +61,6 @@ class OrganizationsController extends AbstractController
      *     response=200,
      *     description="Возвращает при успехе",
      *     @Model(type=OrganizationsListResponse::class)
-     * )
-     * @OA\Response(
-     *     response=404,
-     *     description="Возвращает при отсутствии записи",
-     *     @Model(type=ErrorResponse::class)
      * )
      */
     #[Route(path: '/api/v1/listOrganizations', methods: ['GET'])]
