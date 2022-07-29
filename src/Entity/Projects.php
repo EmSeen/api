@@ -12,13 +12,13 @@ class Projects
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $description = null;
+    private string $description;
 
     #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $startDate;
@@ -26,12 +26,12 @@ class Projects
     #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $endDate;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -43,7 +43,7 @@ class Projects
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
