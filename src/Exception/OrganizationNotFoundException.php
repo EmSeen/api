@@ -5,7 +5,7 @@ namespace App\Exception;
 use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 
-class OrganizationsNotFoundException extends RuntimeException
+class OrganizationNotFoundException extends RuntimeException
 {
     #[Pure]
     public function __construct()

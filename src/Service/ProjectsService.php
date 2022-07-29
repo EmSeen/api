@@ -4,11 +4,10 @@ namespace App\Service;
 
 use App\Entity\Projects;
 use App\Exception\ProjectNotFoundException;
+use App\Model\ProjectRequest;
 use App\Model\ProjectsListItems;
 use App\Model\ProjectsListResponse;
-use App\Model\ProjectRequest;
 use App\Repository\ProjectsRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProjectsService
@@ -36,7 +35,7 @@ class ProjectsService
         return new ProjectsListResponse(
             array_map(
                 [$this, 'map'],
-                $this->projectsRepository->findProjectsById($id)
+                $this->projectsRepository->findProjectById($id)
             )
         );
     }

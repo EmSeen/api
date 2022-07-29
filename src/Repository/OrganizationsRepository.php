@@ -29,4 +29,25 @@ class OrganizationsRepository extends ServiceEntityRepository
     {
         return $this->findBy([], ['name' => Criteria::ASC]);
     }
+
+    public function organizationsList()
+    {
+        $query = $this->_em->createQuery('SELECT o FROM App\Entity\Organizations o');
+
+        return $query->getResult();
+    }
+
+    public function findOrganizationById(int $id)
+    {
+        $query = $this->_em->createQuery('SELECT o FROM App\Entity\Organizations o WHERE :id = o.id ');
+        $query->setParameter('id', $id);
+
+        return $query->getResult();
+    }
+
+    public function existById(int $id): bool
+    {
+        return null !==$this->find($id);
+    }
+
 }

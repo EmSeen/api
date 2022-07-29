@@ -78,6 +78,12 @@ class ProjectsController extends AbstractController
      *     response=200,
      *     description="Возвращает при успехе",
      *     @Model(type=ProjectsListResponse::class)
+     * ),
+     * @OA\Response(
+     *     response=404,
+     *     description="Возвращает при отсутствии записи",
+     *     @Model(type=ErrorResponse::class)
+     *     )
      * )
      *
      * @param int $id

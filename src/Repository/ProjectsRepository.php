@@ -28,7 +28,7 @@ class ProjectsRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findProjectsById(int $id)
+    public function findProjectById(int $id)
     {
         $query = $this->_em->createQuery('SELECT p FROM App\Entity\Projects p WHERE :id = p.id ');
         $query->setParameter('id', $id);

@@ -10,22 +10,18 @@ class OrganizationsListItems
 
     private string $designer;
 
-    /**
-     * OrganizationsListItems constructor.
-     * @param int $id
-     * @param string $name
-     * @param string $designer
-     */
-    public function __construct(int $id, string $name, string $designer)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->designer = $designer;
-    }
+    private string $employees;
 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getName(): string
@@ -33,8 +29,33 @@ class OrganizationsListItems
         return $this->name;
     }
 
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     public function getDesigner(): string
     {
         return $this->designer;
+    }
+
+    public function setDesigner(string $designer): self
+    {
+        $this->designer = $designer;
+
+        return $this;
+    }
+
+    public function getEmployees(): string
+    {
+        return $this->employees;
+    }
+
+    public function setEmployees(string $employees): self
+    {
+        $this->employees = $employees;
+        return $this;
     }
 }

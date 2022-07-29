@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Organizations;
+use App\Exception\OrganizationNotFoundException;
 use App\Model\OrganizationsListItems;
 use App\Model\OrganizationsListResponse;
 use App\Model\OrganizationsRequest;
@@ -11,21 +12,34 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class OrganizationsService
 {
-    public function __construct(private OrganizationsRepository $organizationsRepository, private EntityManagerInterface $em)
-    {
+    public function __construct(
+        private OrganizationsRepository $organizationsRepository,
+        private EntityManagerInterface $em
+    ) {
     }
 
     public function getOrganizations(): OrganizationsListResponse
     {
-        $organizationsOrig = $this->organizationsRepository->findAllSortedByName();
-        $items = array_map(
-            fn (Organizations $organizations) => new OrganizationsListItems(
-                $organizations->getId(), $organizations->getName(), $organizations->getDesigner()
-            ),
-            $organizationsOrig
+        return new OrganizationsListResponse(
+            array_map(
+                [$this, 'map'],
+                $this->organizationsRepository->organizationsList()
+            )
         );
+    }
 
-        return new OrganizationsListResponse($items);
+    public function getOrganization(int $id): OrganizationsListResponse
+    {
+        if (!$this->organizationsRepository->existById($id)) {
+            throw new OrganizationNotFoundException();
+        }
+
+        return new OrganizationsListResponse(
+            array_map(
+                [$this, 'map'],
+                $this->organizationsRepository->findOrganizationById($id)
+            )
+        );
     }
 
     public function newOrganization(OrganizationsRequest $organizationsRequest): void
@@ -38,5 +52,14 @@ class OrganizationsService
 
         $this->em->persist($organizations);
         $this->em->flush();
+    }
+
+    private function map(Organizations $organizations): OrganizationsListItems
+    {
+        return (new OrganizationsListItems())
+            ->setId($organizations->getId())
+            ->setName($organizations->getName())
+            ->setDesigner($organizations->getDesigner())
+            ->setEmployees($organizations->getEmployees());
     }
 }

@@ -3,17 +3,13 @@
 namespace App\Controller;
 
 use App\Attribute\RequestBody;
-use App\Entity\Organizations;
-use App\Form\OrganizationsType;
 use App\Model\OrganizationsListResponse;
 use App\Model\ErrorResponse;
 use App\Model\OrganizationsRequest;
 use App\Service\OrganizationsService;
-use Doctrine\Persistence\ManagerRegistry;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -71,4 +67,31 @@ class OrganizationsController extends AbstractController
 
         return $response;
     }
+
+    /**
+     * Просмотр организации.
+     *
+     * @OA\Tag(name="Organizations")
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Возвращает при успехе",
+     *     @Model(type=OrganizationsListResponse::class)
+     * ),
+     * @OA\Response(
+     *     response=404,
+     *     description="Возвращает при отсутствии записи",
+     *     @Model(type=ErrorResponse::class)
+     *     )
+     * )
+     *
+     * @param int $id
+     * @return Response
+     */
+    #[Route(path: '/api/v1/showOrganization/{id}', methods: ['GET'])]
+    public function show(int $id): Response
+    {
+        return $this->json($this->organizationsService->getOrganization($id))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+    }
+
 }

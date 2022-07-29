@@ -21,7 +21,7 @@ class ProjectsListItems
         return $this->id;
     }
 
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -33,7 +33,7 @@ class ProjectsListItems
         return $this->name;
     }
 
-    public function setName($name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -45,7 +45,7 @@ class ProjectsListItems
         return $this->description;
     }
 
-    public function setDescription($description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -57,7 +57,7 @@ class ProjectsListItems
         return $this->startDate;
     }
 
-    public function setStartDate($startDate): self
+    public function setStartDate(DateTimeInterface $startDate): self
     {
         $this->startDate = $startDate;
 
@@ -69,7 +69,7 @@ class ProjectsListItems
         return $this->endDate;
     }
 
-    public function setEndDate($endDate): self
+    public function setEndDate(DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
 
