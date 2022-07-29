@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Throwable;
 
-abstract class AbstractServiceTest extends TestCase
+abstract class AbstractTestCase extends TestCase
 {
     protected function setEntityId(object $entity,int $value, $idField = 'id')
     {

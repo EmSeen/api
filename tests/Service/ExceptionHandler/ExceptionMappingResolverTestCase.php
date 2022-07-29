@@ -3,11 +3,11 @@
 namespace App\Tests\Service\ExceptionHandler;
 
 use App\Service\ExceptionHandler\ExceptionMappingResolver;
-use App\Tests\AbstractServiceTest;
+use App\Tests\AbstractTestCase;
 use InvalidArgumentException;
 use LogicException;
 
-class ExceptionMappingResolverTest extends AbstractServiceTest
+class ExceptionMappingResolverTestCase extends AbstractTestCase
 {
 
     public function testThrowsExceptionOnEmptyCode(): void

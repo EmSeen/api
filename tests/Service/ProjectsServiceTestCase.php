@@ -5,9 +5,9 @@ namespace App\Tests\Service;
 use App\Exception\ProjectNotFoundException;
 use App\Repository\ProjectsRepository;
 use App\Service\ProjectsService;
-use App\Tests\AbstractServiceTest;
+use App\Tests\AbstractTestCase;
 
-class ProjectsServiceServiceTest extends AbstractServiceTest
+class ProjectsServiceTestCase extends AbstractTestCase
 {
     public function testGetProjectNotFound(): void
     {
