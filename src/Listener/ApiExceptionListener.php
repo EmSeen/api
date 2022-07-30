@@ -29,6 +29,7 @@ class ApiExceptionListener
     public function __invoke(ExceptionEvent $event): void
     {
         $throwable = $event->getThrowable();
+
         if ($this->isSecurityException($throwable)) {
             return;
         }

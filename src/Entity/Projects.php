@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProjectsRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ProjectsRepository::class)]
 class Projects
@@ -12,21 +13,25 @@ class Projects
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private int $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private string $description;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $description;
 
-    #[ORM\Column(type: 'datetime')]
-    private DateTimeInterface $startDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTimeInterface $startDate;
 
-    #[ORM\Column(type: 'datetime')]
-    private DateTimeInterface $endDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTimeInterface $endDate;
 
-    public function getId(): int
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private UserInterface $user;
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -43,19 +48,19 @@ class Projects
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getStartDate(): DateTimeInterface
+    public function getStartDate(): ?DateTimeInterface
     {
         return $this->startDate;
     }
@@ -67,7 +72,7 @@ class Projects
         return $this;
     }
 
-    public function getEndDate(): DateTimeInterface
+    public function getEndDate(): ?DateTimeInterface
     {
         return $this->endDate;
     }
@@ -75,6 +80,18 @@ class Projects
     public function setEndDate($endDate): self
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getUser(): UserInterface
+    {
+        return $this->user;
+    }
+
+    public function setUser(UserInterface $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

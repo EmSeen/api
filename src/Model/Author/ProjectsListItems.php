@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Model\Author;
 
 use DateTimeInterface;
 
@@ -28,7 +28,7 @@ class ProjectsListItems
         return $this;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }

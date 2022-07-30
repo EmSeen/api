@@ -9,10 +9,11 @@ use App\Model\ProjectsListItems;
 use App\Model\ProjectsListResponse;
 use App\Repository\ProjectsRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class ProjectsService
 {
-    public function __construct(private ProjectsRepository $projectsRepository, private EntityManagerInterface $em)
+    public function __construct(private ProjectsRepository $projectsRepository, private EntityManagerInterface $em, private Security $security)
     {
     }
 
@@ -48,6 +49,7 @@ class ProjectsService
         $project->setDescription($projectsRequest->getDescription());
         $project->setStartDate($projectsRequest->getStartDate());
         $project->setEndDate($projectsRequest->getEndDate());
+        $project->setUser($this->security->getUser());
 
         $this->em->persist($project);
         $this->em->flush();

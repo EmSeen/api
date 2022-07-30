@@ -10,6 +10,8 @@ parameters:
         App\Exception\OrganizationNotFoundException: { code: 409, hidden: false }
         App\Exception\RequestBodyConvertException: { code: 300, hidden: false }
         App\Exception\UserAlreadyExistsException: { code: 409, hidden: false }
+        App\Exception\UserNotFoundException: { code: 404, hidden: false }
+        App\Exception\ValidationException: { code: 409, hidden: false }
 
 services:
     # default configuration for services in *this* file
@@ -37,7 +39,7 @@ services:
 
     App\Listener\ApiExceptionListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.exception, priority: 1 }
+            - { name: kernel.event_listener, event: kernel.exception, priority: 10 }
 
     App\Listener\ValidationExceptionListener:
         tags:

@@ -1,0 +1,43 @@
+{# templates/bundles/NelmioApiDocBundle/SwaggerUi/index.html.twig #}
+
+{#
+To avoid a "reached nested level" error an exclamation mark `!` has to be added
+See https://symfony.com/blog/new-in-symfony-3-4-improved-the-overriding-of-templates
+#}
+{% extends '@!NelmioApiDoc/SwaggerUi/index.html.twig' %}
+
+{#
+Change swagger UI configuration
+All parameters are explained on Swagger UI website:
+https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
+#}
+    {% block header_block %}
+        <header>
+            {% block header %}
+{#                <a id="logo" href="https://github.com/nelmio/NelmioApiDocBundle">#}
+{#                    <img src="{{ nelmioAsset(assets_mode, 'logo.png') }}" alt="NelmioApiDocBundle">#}
+{#                </a>#}
+            {% endblock header %}
+        </header>
+    {% endblock header_block %}
+
+{% block swagger_initialization %}
+    <script type="text/javascript">
+        window.onload = loadSwaggerUI({
+            defaultModelsExpandDepth: -1,
+            deepLinking: true,
+        });
+    </script>
+{% endblock %}
+
+{# Import your own stylesheet #}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/custom-swagger-styles.css') }}">
+{% endblock stylesheets %}
+
+{# Import your own script #}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/custom-request-signer.js') }}"></script>
+{% endblock javascripts %}

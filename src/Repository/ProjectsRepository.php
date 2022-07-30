@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Projects;
+use App\Exception\ProjectNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Projects>
@@ -40,4 +42,23 @@ class ProjectsRepository extends ServiceEntityRepository
     {
         return null !== $this->find($id);
     }
+
+    /**
+     * @return Projects[]
+     */
+    public function findUserProjects(UserInterface $user): array
+    {
+        return $this->findBy(['user' => $user]);
+    }
+
+    public function getUserProjectsById(int $id, UserInterface $user): Projects
+    {
+        $book = $this->findOneBy(['id' => $id, 'user' => $user]);
+        if (null === $book) {
+            throw new ProjectNotFoundException();
+        }
+
+        return $book;
+    }
+
 }
