@@ -62,5 +62,4 @@ class Organizations
 
         return $this;
     }
-
 }

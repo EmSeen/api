@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 
-class ValidationExceptionListenerTestCase extends AbstractTestCase
+class ValidationExceptionListenerTest extends AbstractTestCase
 {
     private SerializerInterface $serializer;
 
@@ -38,17 +38,17 @@ class ValidationExceptionListenerTestCase extends AbstractTestCase
     public function testInvoke(): void
     {
         $serialized = json_encode([
-                                      'message' => 'validation failed',
-                                      'details' => [
-                                          'violations' => [
-                                              ['field' => 'name', 'message' => 'error'],
-                                          ],
-                                      ],
-                                  ]);
+            'message' => 'validation failed',
+            'details' => [
+                'violations' => [
+                    ['field' => 'name', 'message' => 'error'],
+                ],
+            ],
+        ]);
 
         $event = $this->createExceptionEvent(new ValidationException(new ConstraintViolationList([
-                                                                                                     new ConstraintViolation('error', null, [], null, 'name', null),
-                                                                                                 ])));
+            new ConstraintViolation('error', null, [], null, 'name', null),
+        ])));
 
         $this->serializer->expects($this->once())
             ->method('serialize')

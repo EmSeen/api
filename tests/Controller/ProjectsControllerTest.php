@@ -50,7 +50,7 @@ class ProjectsControllerTest extends AbstractControllerTest
 
     public function testShow(): void
     {
-        $this->client->request('GET', '/api/v1/showProject/5');
+        $this->client->request('GET', '/api/v1/showProject/1');
         $responseContent = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertResponseIsSuccessful();

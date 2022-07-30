@@ -27,15 +27,12 @@ class RequestBodyArgumentResolver implements ArgumentValueResolverInterface
 
     public function resolve(Request $request, ArgumentMetadata $argument): ?Generator
     {
-
         try {
-
             $model = $this->serializer->deserialize(
                 $request->getContent(),
                 $argument->getType(),
                 JsonEncoder::FORMAT
             );
-
         } catch (Throwable $throwable) {
             throw new RequestBodyConvertException($throwable);
         }

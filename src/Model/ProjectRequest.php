@@ -18,7 +18,7 @@ class ProjectRequest
 
     public function __toString(): string
     {
-       return $this->name;
+        return $this->name;
     }
 
     public function getName(): string
@@ -46,7 +46,7 @@ class ProjectRequest
         return $this->startDate;
     }
 
-    function setStartDate(DateTimeInterface $startDate): void
+    public function setStartDate(DateTimeInterface $startDate): void
     {
         $this->startDate = $startDate;
     }
@@ -60,5 +60,4 @@ class ProjectRequest
     {
         $this->endDate = $endDate;
     }
-
 }

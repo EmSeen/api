@@ -3,31 +3,31 @@
 namespace App\Service\ExceptionHandler;
 
 use InvalidArgumentException;
-use JetBrains\PhpStorm\Pure;
 
 class ExceptionMappingResolver
 {
     /**
      * @var ExceptionMapping[]
      */
-    private array $mappings;
+    private array $mappings = [];
 
     public function __construct(array $mappings)
     {
         foreach ($mappings as $class => $mapping) {
             if (empty($mapping['code'])) {
-                throw new InvalidArgumentException('отсутсвует код ошибки' . $class);
+                throw new InvalidArgumentException('code is mandatory for class'.$class);
             }
 
             $this->addMapping(
                 $class,
                 $mapping['code'],
                 $mapping['hidden'] ?? true,
-                $mapping['loggable'] ?? false);
+                $mapping['loggable'] ?? false
+            );
         }
     }
 
-    #[Pure] public function resolve(string $throwableClass): ?ExceptionMapping
+    public function resolve(string $throwableClass): ?ExceptionMapping
     {
         $foundMapping = null;
 

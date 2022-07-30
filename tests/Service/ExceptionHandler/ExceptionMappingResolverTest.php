@@ -7,9 +7,8 @@ use App\Tests\AbstractTestCase;
 use InvalidArgumentException;
 use LogicException;
 
-class ExceptionMappingResolverTestCase extends AbstractTestCase
+class ExceptionMappingResolverTest extends AbstractTestCase
 {
-
     public function testThrowsExceptionOnEmptyCode(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -57,5 +56,4 @@ class ExceptionMappingResolverTestCase extends AbstractTestCase
 
         $this->assertTrue($mapping->isLoggable());
     }
-
 }

@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class ApiExceptionListenerTestCase extends AbstractTestCase
+class ApiExceptionListenerTest extends AbstractTestCase
 {
     private ExceptionMappingResolver $resolver;
 
@@ -171,15 +171,13 @@ class ApiExceptionListenerTestCase extends AbstractTestCase
         $this->serializer->expects($this->once())
             ->method('serialize')
             ->with(
-                $this->callback(
-                    function (ErrorResponse $response) use ($responseMessage) {
-                        /** @var ErrorDebugDetails|object $details */
-                        $details = $response->getDetails();
+                $this->callback(function (ErrorResponse $response) use ($responseMessage) {
+                    /** @var ErrorDebugDetails|object $details */
+                    $details = $response->getDetails();
 
-                        return $response->getMessage() == $responseMessage &&
-                            $details instanceof ErrorDebugDetails && !empty($details->getTrace());
-                    }
-                ),
+                    return $response->getMessage() == $responseMessage &&
+                        $details instanceof ErrorDebugDetails && !empty($details->getTrace());
+                }),
                 JsonEncoder::FORMAT
             )
             ->willReturn($responseBody);

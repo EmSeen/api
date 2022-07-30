@@ -10,6 +10,6 @@ class OrganizationNotFoundException extends RuntimeException
     #[Pure]
     public function __construct()
     {
-        parent::__construct('Такой записи не существует');
+        parent::__construct('Такой организации не существует');
     }
 }

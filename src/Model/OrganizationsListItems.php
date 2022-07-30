@@ -56,6 +56,7 @@ class OrganizationsListItems
     public function setEmployees(string $employees): self
     {
         $this->employees = $employees;
+
         return $this;
     }
 }

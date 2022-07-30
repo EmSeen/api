@@ -46,9 +46,9 @@ class ProjectsController extends AbstractController
     public function new(#[RequestBody] ProjectRequest $projectRequest): Response
     {
         $this->projectsService->newProject($projectRequest);
-        return $this->json('Создана запись ' . $projectRequest)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-    }
 
+        return $this->json('Создана запись '.$projectRequest)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+    }
 
     /**
      * Список проектов.
@@ -60,8 +60,6 @@ class ProjectsController extends AbstractController
      *     description="Возвращает при успехе",
      *     @Model(type=ProjectsListResponse::class)
      * )
-     *
-     * @return Response
      */
     #[Route(path: '/api/v1/listProjects', methods: ['GET'])]
     public function list(): Response
@@ -85,7 +83,6 @@ class ProjectsController extends AbstractController
      *     @Model(type=ErrorResponse::class)
      *     )
      * )
-     *
      * @param int $id
      * @return Response
      */

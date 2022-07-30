@@ -2,13 +2,14 @@
 
 namespace App\Exception;
 
+use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 use Throwable;
 
 class RequestBodyConvertException extends RuntimeException
 {
-    public function __construct(Throwable $previous)
+    #[Pure] public function __construct(Throwable $previous)
     {
-        parent::__construct('error while unmarshalling request body', 0, $previous);
+        parent::__construct('Ошибка при распаковке тела запроса', 0, $previous);
     }
 }

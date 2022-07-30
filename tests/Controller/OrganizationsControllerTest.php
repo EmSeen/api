@@ -48,7 +48,7 @@ class OrganizationsControllerTest extends AbstractControllerTest
 
     public function testShow(): void
     {
-        $this->client->request('GET', '/api/v1/showOrganization/7');
+        $this->client->request('GET', '/api/v1/showOrganization/1');
         $responseContent = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertResponseIsSuccessful();

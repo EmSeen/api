@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Attribute\RequestBody;
-use App\Model\OrganizationsListResponse;
 use App\Model\ErrorResponse;
+use App\Model\OrganizationsListResponse;
 use App\Model\OrganizationsRequest;
 use App\Service\OrganizationsService;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -38,6 +38,7 @@ class OrganizationsController extends AbstractController
      *     @Model(type=ErrorResponse::class)
      *     )
      * )
+     *
      * @param OrganizationsRequest $organizationsRequest
      * @return Response
      */
@@ -45,7 +46,8 @@ class OrganizationsController extends AbstractController
     public function new(#[RequestBody] OrganizationsRequest $organizationsRequest): Response
     {
         $this->organizationsService->newOrganization($organizationsRequest);
-        return $this->json('Создана запись ' . $organizationsRequest)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+
+        return $this->json('Создана запись '.$organizationsRequest)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -84,7 +86,6 @@ class OrganizationsController extends AbstractController
      *     @Model(type=ErrorResponse::class)
      *     )
      * )
-     *
      * @param int $id
      * @return Response
      */
@@ -93,5 +94,4 @@ class OrganizationsController extends AbstractController
     {
         return $this->json($this->organizationsService->getOrganization($id))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
-
 }
