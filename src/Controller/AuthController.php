@@ -10,10 +10,9 @@ use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Model\IdResponse;
 use App\Model\ErrorResponse;
 
-class AuthControllerController extends AbstractController
+class AuthController extends AbstractController
 {
     public function __construct(private SignUpService $signUpService)
     {

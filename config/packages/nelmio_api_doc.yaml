@@ -1,5 +1,10 @@
 nelmio_api_doc:
     documentation:
+        servers:
+            -   url: http://127.0.0.1:8000
+                description: API lacalhost
+            -   url: https://api.example.com/secured
+                description: API over HTTPS
         info:
             title: My App
             description: This is an awesome app!
@@ -11,7 +16,7 @@ nelmio_api_doc:
                     scheme: bearer
                     bearerFormat: JWT
         security:
-            -   Bearer: []
+            -   Bearer: [ ]
     areas: # to filter documented areas
         path_patterns:
             - ^/api/v1

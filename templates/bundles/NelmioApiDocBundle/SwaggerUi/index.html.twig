@@ -11,6 +11,7 @@ Change swagger UI configuration
 All parameters are explained on Swagger UI website:
 https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
 #}
+
     {% block header_block %}
         <header>
             {% block header %}
@@ -21,23 +22,23 @@ https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
         </header>
     {% endblock header_block %}
 
-{% block swagger_initialization %}
-    <script type="text/javascript">
-        window.onload = loadSwaggerUI({
-            defaultModelsExpandDepth: -1,
-            deepLinking: true,
-        });
-    </script>
-{% endblock %}
+{#{% block swagger_initialization %}#}
+{#    <script type="text/javascript">#}
+{#        window.onload = loadSwaggerUI({#}
+{#            defaultModelsExpandDepth: -1,#}
+{#            deepLinking: true,#}
+{#        });#}
+{#    </script>#}
+{#{% endblock %}#}
 
 {# Import your own stylesheet #}
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/custom-swagger-styles.css') }}">
-{% endblock stylesheets %}
+{#{% block stylesheets %}#}
+{#    {{ parent() }}#}
+{#    <link rel="stylesheet" href="{{ asset('css/custom-swagger-styles.css') }}">#}
+{#{% endblock stylesheets %}#}
 
 {# Import your own script #}
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/custom-request-signer.js') }}"></script>
-{% endblock javascripts %}
+{#{% block javascripts %}#}
+{#    {{ parent() }}#}
+{#    <script type="text/javascript" src="{{ asset('js/custom-request-signer.js') }}"></script>#}
+{#{% endblock javascripts %}#}
