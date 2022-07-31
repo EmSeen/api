@@ -7,7 +7,7 @@ use App\Entity\User;
 use App\Tests\AbstractControllerTest;
 use phpDocumentor\Reflection\Types\This;
 
-class ProjectsControllerTest extends AbstractControllerTest
+class ProjectControllerTest extends AbstractControllerTest
 {
     private function getUser() : User
     {

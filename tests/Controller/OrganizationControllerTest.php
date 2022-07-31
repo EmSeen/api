@@ -5,7 +5,7 @@ namespace App\Tests\Controller;
 use App\Entity\Organization;
 use App\Tests\AbstractControllerTest;
 
-class OrganizationsControllerTest extends AbstractControllerTest
+class OrganizationControllerTest extends AbstractControllerTest
 {
     public function testList(): void
     {

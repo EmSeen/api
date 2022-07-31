@@ -10,7 +10,7 @@ class ProjectListResponse
     private array $items;
 
     /**
-     * OrganizationsListResponse constructor.
+     * ProjectListResponse constructor.
      *
      * @param ProjectListItem[] $items
      */

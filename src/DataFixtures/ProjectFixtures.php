@@ -7,7 +7,7 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class ProjectsFixtures extends Fixture
+class ProjectFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {

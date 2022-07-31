@@ -10,7 +10,7 @@ class OrganizationListResponse
     private array $items;
 
     /**
-     * OrganizationsListResponse constructor.
+     * OrganizationListResponse constructor.
      *
      * @param OrganizationListItems[] $items
      */
