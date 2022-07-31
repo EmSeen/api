@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Projects;
+use App\Entity\Project;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjectsType extends AbstractType
+class ProjectType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,7 +25,7 @@ class ProjectsType extends AbstractType
             [
                 'allow_extra_fields' => true,
                 'csrf_protection' => false,
-                'data_class' => Projects::class,
+                'data_class' => Project::class,
             ]
         );
     }

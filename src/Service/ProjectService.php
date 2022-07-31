@@ -2,24 +2,24 @@
 
 namespace App\Service;
 
-use App\Entity\Projects;
+use App\Entity\Project;
 use App\Exception\ProjectNotFoundException;
 use App\Model\ProjectRequest;
-use App\Model\ProjectsListItem;
-use App\Model\ProjectsListResponse;
-use App\Repository\ProjectsRepository;
+use App\Model\ProjectListItem;
+use App\Model\ProjectListResponse;
+use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 
-class ProjectsService
+class ProjectService
 {
-    public function __construct(private ProjectsRepository $projectsRepository, private EntityManagerInterface $em, private Security $security)
+    public function __construct(private ProjectRepository $projectsRepository, private EntityManagerInterface $em, private Security $security)
     {
     }
 
-    public function getProjects(): ProjectsListResponse
+    public function getProjects(): ProjectListResponse
     {
-        return new ProjectsListResponse(
+        return new ProjectListResponse(
             array_map(
                 [$this, 'map'],
                 $this->projectsRepository->projectsList()
@@ -27,13 +27,13 @@ class ProjectsService
         );
     }
 
-    public function getProject(int $id): ProjectsListResponse
+    public function getProject(int $id): ProjectListResponse
     {
         if (!$this->projectsRepository->existById($id)) {
             throw new ProjectNotFoundException();
         }
 
-        return new ProjectsListResponse(
+        return new ProjectListResponse(
             array_map(
                 [$this, 'map'],
                 $this->projectsRepository->findProjectById($id)
@@ -43,7 +43,7 @@ class ProjectsService
 
     public function newProject(ProjectRequest $projectsRequest): void
     {
-        $project = new Projects();
+        $project = new Project();
 
         $project->setName($projectsRequest->getName());
         $project->setDescription($projectsRequest->getDescription());
@@ -55,9 +55,9 @@ class ProjectsService
         $this->em->flush();
     }
 
-    private function map(Projects $projects): ProjectsListItem
+    private function map(Project $projects): ProjectListItem
     {
-        return (new ProjectsListItem())
+        return (new ProjectListItem())
             ->setId($projects->getId())
             ->setName($projects->getName())
             ->setDescription($projects->getDescription())

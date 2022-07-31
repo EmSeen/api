@@ -2,17 +2,17 @@
 
 namespace App\Model;
 
-class OrganizationsListResponse
+class OrganizationListResponse
 {
     /**
-     * @var OrganizationsListItems[]
+     * @var OrganizationListItems[]
      */
     private array $items;
 
     /**
      * OrganizationsListResponse constructor.
      *
-     * @param OrganizationsListItems[] $items
+     * @param OrganizationListItems[] $items
      */
     public function __construct(array $items)
     {
@@ -20,7 +20,7 @@ class OrganizationsListResponse
     }
 
     /**
-     * @return OrganizationsListItems[]
+     * @return OrganizationListItems[]
      */
     public function getItems(): array
     {

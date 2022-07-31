@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Organizations;
+use App\Entity\Organization;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrganizationsType extends AbstractType
+class OrganizationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,7 +22,7 @@ class OrganizationsType extends AbstractType
             [
                 'allow_extra_fields' => true,
                 'csrf_protection' => false,
-                'data_class' => Organizations::class,
+                'data_class' => Organization::class,
             ]
         );
     }

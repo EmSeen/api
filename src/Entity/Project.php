@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectsRepository;
+use App\Repository\ProjectRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: ProjectsRepository::class)]
-class Projects
+#[ORM\Entity(repositoryClass: ProjectRepository::class)]
+class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

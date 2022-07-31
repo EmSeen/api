@@ -2,25 +2,25 @@
 
 namespace App\Service;
 
-use App\Entity\Organizations;
+use App\Entity\Organization;
 use App\Exception\OrganizationNotFoundException;
-use App\Model\OrganizationsListItems;
-use App\Model\OrganizationsListResponse;
-use App\Model\OrganizationsRequest;
-use App\Repository\OrganizationsRepository;
+use App\Model\OrganizationListItems;
+use App\Model\OrganizationListResponse;
+use App\Model\OrganizationRequest;
+use App\Repository\OrganizationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class OrganizationsService
+class OrganizationService
 {
     public function __construct(
-        private OrganizationsRepository $organizationsRepository,
+        private OrganizationRepository $organizationsRepository,
         private EntityManagerInterface $em
     ) {
     }
 
-    public function getOrganizations(): OrganizationsListResponse
+    public function getOrganizations(): OrganizationListResponse
     {
-        return new OrganizationsListResponse(
+        return new OrganizationListResponse(
             array_map(
                 [$this, 'map'],
                 $this->organizationsRepository->organizationsList()
@@ -28,13 +28,13 @@ class OrganizationsService
         );
     }
 
-    public function getOrganization(int $id): OrganizationsListResponse
+    public function getOrganization(int $id): OrganizationListResponse
     {
         if (!$this->organizationsRepository->existById($id)) {
             throw new OrganizationNotFoundException();
         }
 
-        return new OrganizationsListResponse(
+        return new OrganizationListResponse(
             array_map(
                 [$this, 'map'],
                 $this->organizationsRepository->findOrganizationById($id)
@@ -42,9 +42,9 @@ class OrganizationsService
         );
     }
 
-    public function newOrganization(OrganizationsRequest $organizationsRequest): void
+    public function newOrganization(OrganizationRequest $organizationsRequest): void
     {
-        $organizations = new Organizations();
+        $organizations = new Organization();
 
         $organizations->setName($organizationsRequest->getName());
         $organizations->setDesigner($organizationsRequest->getDesigner());
@@ -54,9 +54,9 @@ class OrganizationsService
         $this->em->flush();
     }
 
-    private function map(Organizations $organizations): OrganizationsListItems
+    private function map(Organization $organizations): OrganizationListItems
     {
-        return (new OrganizationsListItems())
+        return (new OrganizationListItems())
             ->setId($organizations->getId())
             ->setName($organizations->getName())
             ->setDesigner($organizations->getDesigner())

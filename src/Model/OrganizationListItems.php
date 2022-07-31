@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class OrganizationsListItems
+class OrganizationListItems
 {
     private int $id;
 

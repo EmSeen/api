@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class OrganizationsRequest
+class OrganizationRequest
 {
     private string $name;
 

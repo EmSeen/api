@@ -5,17 +5,17 @@ namespace App\Controller;
 use App\Attribute\RequestBody;
 use App\Model\ErrorResponse;
 use App\Model\ProjectRequest;
-use App\Model\ProjectsListResponse;
-use App\Service\ProjectsService;
+use App\Model\ProjectListResponse;
+use App\Service\ProjectService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProjectsController extends AbstractController
+class ProjectController extends AbstractController
 {
-    public function __construct(private ProjectsService $projectsService)
+    public function __construct(private ProjectService $projectsService)
     {
     }
 
@@ -58,7 +58,7 @@ class ProjectsController extends AbstractController
      * @OA\Response(
      *     response=200,
      *     description="Возвращает при успехе",
-     *     @Model(type=ProjectsListResponse::class)
+     *     @Model(type=ProjectListResponse::class)
      * )
      */
     #[Route(path: '/api/v1/listProjects', methods: ['GET'])]
@@ -75,7 +75,7 @@ class ProjectsController extends AbstractController
      * @OA\Response(
      *     response=200,
      *     description="Возвращает при успехе",
-     *     @Model(type=ProjectsListResponse::class)
+     *     @Model(type=ProjectListResponse::class)
      * ),
      * @OA\Response(
      *     response=404,

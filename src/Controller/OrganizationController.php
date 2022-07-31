@@ -4,18 +4,18 @@ namespace App\Controller;
 
 use App\Attribute\RequestBody;
 use App\Model\ErrorResponse;
-use App\Model\OrganizationsListResponse;
-use App\Model\OrganizationsRequest;
-use App\Service\OrganizationsService;
+use App\Model\OrganizationListResponse;
+use App\Model\OrganizationRequest;
+use App\Service\OrganizationService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class OrganizationsController extends AbstractController
+class OrganizationController extends AbstractController
 {
-    public function __construct(private OrganizationsService $organizationsService)
+    public function __construct(private OrganizationService $organizationsService)
     {
     }
 
@@ -24,12 +24,12 @@ class OrganizationsController extends AbstractController
      *
      * @OA\Tag(name="Organizations")
      *
-     * @OA\RequestBody(@Model(type=OrganizationsRequest::class))
+     * @OA\RequestBody(@Model(type=OrganizationRequest::class))
      *
      * @OA\Response(
      *     response=200,
      *     description="Возвращает при успехе",
-     *     @Model(type=OrganizationsRequest::class)
+     *     @Model(type=OrganizationRequest::class)
      *     )
      * ),
      * @OA\Response(
@@ -39,11 +39,11 @@ class OrganizationsController extends AbstractController
      *     )
      * )
      *
-     * @param OrganizationsRequest $organizationsRequest
+     * @param OrganizationRequest $organizationsRequest
      * @return Response
      */
     #[Route(path: '/api/v1/newOrganization', methods: ['POST'])]
-    public function new(#[RequestBody] OrganizationsRequest $organizationsRequest): Response
+    public function new(#[RequestBody] OrganizationRequest $organizationsRequest): Response
     {
         $this->organizationsService->newOrganization($organizationsRequest);
 
@@ -58,7 +58,7 @@ class OrganizationsController extends AbstractController
      * @OA\Response(
      *     response=200,
      *     description="Возвращает при успехе",
-     *     @Model(type=OrganizationsListResponse::class)
+     *     @Model(type=OrganizationListResponse::class)
      * )
      */
     #[Route(path: '/api/v1/listOrganizations', methods: ['GET'])]
@@ -78,7 +78,7 @@ class OrganizationsController extends AbstractController
      * @OA\Response(
      *     response=200,
      *     description="Возвращает при успехе",
-     *     @Model(type=OrganizationsListResponse::class)
+     *     @Model(type=OrganizationListResponse::class)
      * ),
      * @OA\Response(
      *     response=404,

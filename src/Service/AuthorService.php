@@ -2,19 +2,19 @@
 
 namespace App\Service;
 
-use App\Entity\Projects;
+use App\Entity\Project;
 use App\Model\Author\CreateProjectRequest;
 use App\Model\Author\ProjectsListResponse;
 use App\Model\Author\ProjectsListItems;
 use App\Model\IdResponse;
-use App\Repository\ProjectsRepository;
+use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 
 class AuthorService
 {
     public function __construct(private EntityManagerInterface $em,
-                                private ProjectsRepository $projectsRepository,
+                                private ProjectRepository $projectsRepository,
                                 private Security $security)
     {
     }
@@ -33,7 +33,7 @@ class AuthorService
 
     public function createProject(CreateProjectRequest $projectRequest): IdResponse
     {
-        $project = (new Projects())
+        $project = (new Project())
             ->setName($projectRequest->getName())
             ->setUser($this->security->getUser());
 
@@ -51,7 +51,7 @@ class AuthorService
         $this->em->flush();
     }
 
-    private function map(Projects $projects): ProjectsListItems
+    private function map(Project $projects): ProjectsListItems
     {
         return (new ProjectsListItems())
             ->setId($projects->getId())

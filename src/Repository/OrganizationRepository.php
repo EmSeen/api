@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Organizations;
+use App\Entity\Organization;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
@@ -10,20 +10,20 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Organizations>
  *
- * @method Organizations|null find($id, $lockMode = null, $lockVersion = null)
- * @method Organizations|null findOneBy(array $criteria, array $orderBy = null)
- * @method Organizations[]    findAll()
- * @method Organizations[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Organization|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Organization|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Organization[]    findAll()
+ * @method Organization[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class OrganizationsRepository extends ServiceEntityRepository
+class OrganizationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Organizations::class);
+        parent::__construct($registry, Organization::class);
     }
 
     /**
-     * @return Organizations[]
+     * @return Organization[]
      */
     public function findAllSortedByName(): array
     {

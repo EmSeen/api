@@ -2,7 +2,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Organizations;
+use App\Entity\Organization;
 use App\Tests\AbstractControllerTest;
 
 class OrganizationsControllerTest extends AbstractControllerTest
@@ -11,7 +11,7 @@ class OrganizationsControllerTest extends AbstractControllerTest
     {
         $this->em->persist(
             (
-            new Organizations())
+            new Organization())
                 ->setName('test')
                 ->setDesigner('test')
                 ->setEmployees('q')

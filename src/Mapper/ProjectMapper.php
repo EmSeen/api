@@ -2,13 +2,13 @@
 
 namespace App\Mapper;
 
-use App\Entity\Projects;
-use App\Model\ProjectsDetails;
-use App\Model\ProjectsListItem;
+use App\Entity\Project;
+use App\Model\ProjectDetails;
+use App\Model\ProjectListItem;
 
-class ProjectsMapper
+class ProjectMapper
 {
-    public static function map(Projects $projects, ProjectsDetails|ProjectsListItem $model): ProjectsDetails|ProjectsListItem
+    public static function map(Project $projects, ProjectDetails|ProjectListItem $model): ProjectDetails|ProjectListItem
     {
         return $model
             ->setId($projects->getId())

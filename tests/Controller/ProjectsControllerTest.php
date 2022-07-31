@@ -2,7 +2,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Projects;
+use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\AbstractControllerTest;
 
@@ -12,7 +12,7 @@ class ProjectsControllerTest extends AbstractControllerTest
     {
         $this->em->persist(
             (
-            new Projects())
+            new Project())
             ->setName('test')
             ->setDescription('test')
             ->setStartDate(new \DateTime('2022-12-12T12:10:00+00:00'))

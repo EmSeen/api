@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Projects;
+use App\Entity\Project;
 use App\Exception\ProjectNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,16 +11,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @extends ServiceEntityRepository<Projects>
  *
- * @method Projects|null find($id, $lockMode = null, $lockVersion = null)
- * @method Projects|null findOneBy(array $criteria, array $orderBy = null)
- * @method Projects[]    findAll()
- * @method Projects[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Project|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Project|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Project[]    findAll()
+ * @method Project[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProjectsRepository extends ServiceEntityRepository
+class ProjectRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Projects::class);
+        parent::__construct($registry, Project::class);
     }
 
     public function projectsList()
@@ -44,14 +44,14 @@ class ProjectsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Projects[]
+     * @return Project[]
      */
     public function findUserProjects(UserInterface $user): array
     {
         return $this->findBy(['user' => $user]);
     }
 
-    public function getUserProjectsById(int $id, UserInterface $user): Projects
+    public function getUserProjectsById(int $id, UserInterface $user): Project
     {
         $book = $this->findOneBy(['id' => $id, 'user' => $user]);
         if (null === $book) {
