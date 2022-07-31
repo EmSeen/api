@@ -30,7 +30,7 @@ class AuthorController extends AbstractController
      */
     #[Security(name: 'Bearer')]
     #[Route(path: '/api/v1/author/project', methods: ['GET'])]
-    public function projects(): Response
+    public function project(): Response
     {
         return $this->json($this->authorService->getProjects());
     }

@@ -4,7 +4,7 @@ namespace App\Model\Author;
 
 use DateTimeInterface;
 
-class ProjectsListItems
+class ProjectListItems
 {
     private int $id;
 

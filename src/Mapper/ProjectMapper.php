@@ -8,13 +8,13 @@ use App\Model\ProjectListItem;
 
 class ProjectMapper
 {
-    public static function map(Project $projects, ProjectDetails|ProjectListItem $model): ProjectDetails|ProjectListItem
+    public static function map(Project $project, ProjectDetails|ProjectListItem $model): ProjectDetails|ProjectListItem
     {
         return $model
-            ->setId($projects->getId())
-            ->setName($projects->getName())
-            ->setDescription($projects->getDescription())
-            ->setStartDate($projects->getStartDate())
-            ->setEndDate($projects->getEndDate());
+            ->setId($project->getId())
+            ->setName($project->getName())
+            ->setDescription($project->getDescription())
+            ->setStartDate($project->getStartDate())
+            ->setEndDate($project->getEndDate());
     }
 }

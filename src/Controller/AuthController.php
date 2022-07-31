@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Attribute\RequestBody;
-use App\Model\SingUpRequest;
+use App\Model\SignUpRequest;
 use App\Service\SignUpService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
@@ -23,7 +23,7 @@ class AuthController extends AbstractController
      *
      * @OA\Tag(name="Регистрация")
      *
-     * @OA\RequestBody(@Model(type=SingUpRequest::class))
+     * @OA\RequestBody(@Model(type=SignUpRequest::class))
      *
      * @OA\Response(
      *     response=200,
@@ -42,12 +42,12 @@ class AuthController extends AbstractController
      *     description="Возвращает при успехе",
      *     @Model(type=ErrorResponse::class)
      * )
-     * @param SingUpRequest $singUpRequest
+     * @param SignUpRequest $signUpRequest
      * @return Response
      */
     #[Route(path: '/api/v1/auth/signUp', methods: ['POST'])]
-    public function action(#[RequestBody] SingUpRequest $singUpRequest): Response
+    public function action(#[RequestBody] SignUpRequest $signUpRequest): Response
     {
-        return $this->signUpService->singUp($singUpRequest);
+        return $this->signUpService->signUp($signUpRequest);
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Model;
 
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class SingUpRequest
+class SignUpRequest
 {
     #[NotBlank]
     private string $firstName;
@@ -14,6 +15,7 @@ class SingUpRequest
     #[NotBlank]
     private string $lastName;
 
+    #[Email]
     #[NotBlank]
     private string $email;
 
@@ -22,7 +24,7 @@ class SingUpRequest
     private string $password;
 
     #[NotBlank]
-    #[EqualTo(propertyPath: 'password', message: 'пароли не совпадают')]
+    #[EqualTo(propertyPath: 'password', message: 'This value should be equal to password field')]
     private string $confirmPassword;
 
     public function getFirstName(): string

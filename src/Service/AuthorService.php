@@ -4,8 +4,8 @@ namespace App\Service;
 
 use App\Entity\Project;
 use App\Model\Author\CreateProjectRequest;
-use App\Model\Author\ProjectsListResponse;
-use App\Model\Author\ProjectsListItems;
+use App\Model\Author\ProjectListResponse;
+use App\Model\Author\ProjectListItems;
 use App\Model\IdResponse;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,19 +14,19 @@ use Symfony\Component\Security\Core\Security;
 class AuthorService
 {
     public function __construct(private EntityManagerInterface $em,
-                                private ProjectRepository $projectsRepository,
+                                private ProjectRepository $projectRepository,
                                 private Security $security)
     {
     }
 
-    public function getProjects(): ProjectsListResponse
+    public function getProjects(): ProjectListResponse
     {
         $user = $this->security->getUser();
 
-        return new ProjectsListResponse(
+        return new ProjectListResponse(
             array_map(
                 [$this, 'map'],
-                $this->projectsRepository->findUserProjects($user)
+                $this->projectRepository->findUserProjects($user)
             )
         );
     }
@@ -45,19 +45,19 @@ class AuthorService
 
     public function deleteProject(int $id): void
     {
-        $book = $this->projectsRepository->getUserProjectsById($id, $this->security->getUser());
+        $book = $this->projectRepository->getUserProjectsById($id, $this->security->getUser());
 
         $this->em->remove($book);
         $this->em->flush();
     }
 
-    private function map(Project $projects): ProjectsListItems
+    private function map(Project $project): ProjectListItems
     {
-        return (new ProjectsListItems())
-            ->setId($projects->getId())
-            ->setName($projects->getName())
-            ->setDescription($projects->getDescription())
-            ->setStartDate($projects->getStartDate())
-            ->setEndDate($projects->getEndDate());
+        return (new ProjectListItems())
+            ->setId($project->getId())
+            ->setName($project->getName())
+            ->setDescription($project->getDescription())
+            ->setStartDate($project->getStartDate())
+            ->setEndDate($project->getEndDate());
     }
 }

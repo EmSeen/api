@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Organizations>
+ * @extends ServiceEntityRepository<Organization>
  *
  * @method Organization|null find($id, $lockMode = null, $lockVersion = null)
  * @method Organization|null findOneBy(array $criteria, array $orderBy = null)
@@ -32,14 +32,14 @@ class OrganizationRepository extends ServiceEntityRepository
 
     public function organizationsList()
     {
-        $query = $this->_em->createQuery('SELECT o FROM App\Entity\Organizations o');
+        $query = $this->_em->createQuery('SELECT o FROM App\Entity\Organization o');
 
         return $query->getResult();
     }
 
     public function findOrganizationById(int $id)
     {
-        $query = $this->_em->createQuery('SELECT o FROM App\Entity\Organizations o WHERE :id = o.id ');
+        $query = $this->_em->createQuery('SELECT o FROM App\Entity\Organization o WHERE :id = o.id ');
         $query->setParameter('id', $id);
 
         return $query->getResult();

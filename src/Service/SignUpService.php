@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Service;
-
 
 use App\Entity\User;
 use App\Exception\UserAlreadyExistsException;
-use App\Model\SingUpRequest;
+use App\Model\SignUpRequest;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
@@ -22,19 +20,19 @@ class SignUpService
     {
     }
 
-    public function singUp(SingUpRequest $singUpRequest): Response
+    public function signUp(SignUpRequest $signUpRequest): Response
     {
-        if ($this->userRepository->existByEmail($singUpRequest->getEmail())) {
+        if ($this->userRepository->existsByEmail($signUpRequest->getEmail())) {
             throw new UserAlreadyExistsException();
         }
 
         $user = (new User())
             ->setRoles(['ROLE_USER'])
-            ->setFirstName($singUpRequest->getFirstName())
-            ->setLastName($singUpRequest->getLastName())
-            ->setEmail($singUpRequest->getEmail());
+            ->setFirstName($signUpRequest->getFirstName())
+            ->setLastName($signUpRequest->getLastName())
+            ->setEmail($signUpRequest->getEmail());
 
-        $user->setPassword($this->hasher->hashPassword($user, $singUpRequest->getPassword()));
+        $user->setPassword($this->hasher->hashPassword($user, $signUpRequest->getPassword()));
 
         $this->em->persist($user);
         $this->em->flush();

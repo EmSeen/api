@@ -9,7 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @extends ServiceEntityRepository<Projects>
+ * @extends ServiceEntityRepository<Project>
  *
  * @method Project|null find($id, $lockMode = null, $lockVersion = null)
  * @method Project|null findOneBy(array $criteria, array $orderBy = null)
@@ -25,14 +25,14 @@ class ProjectRepository extends ServiceEntityRepository
 
     public function projectsList()
     {
-        $query = $this->_em->createQuery('SELECT p FROM App\Entity\Projects p');
+        $query = $this->_em->createQuery('SELECT p FROM App\Entity\Project p');
 
         return $query->getResult();
     }
 
     public function findProjectById(int $id)
     {
-        $query = $this->_em->createQuery('SELECT p FROM App\Entity\Projects p WHERE :id = p.id ');
+        $query = $this->_em->createQuery('SELECT p FROM App\Entity\Project p WHERE :id = p.id ');
         $query->setParameter('id', $id);
 
         return $query->getResult();

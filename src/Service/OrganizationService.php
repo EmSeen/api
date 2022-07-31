@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class OrganizationService
 {
     public function __construct(
-        private OrganizationRepository $organizationsRepository,
+        private OrganizationRepository $organizationRepository,
         private EntityManagerInterface $em
     ) {
     }
@@ -23,43 +23,43 @@ class OrganizationService
         return new OrganizationListResponse(
             array_map(
                 [$this, 'map'],
-                $this->organizationsRepository->organizationsList()
+                $this->organizationRepository->organizationsList()
             )
         );
     }
 
     public function getOrganization(int $id): OrganizationListResponse
     {
-        if (!$this->organizationsRepository->existById($id)) {
+        if (!$this->organizationRepository->existById($id)) {
             throw new OrganizationNotFoundException();
         }
 
         return new OrganizationListResponse(
             array_map(
                 [$this, 'map'],
-                $this->organizationsRepository->findOrganizationById($id)
+                $this->organizationRepository->findOrganizationById($id)
             )
         );
     }
 
-    public function newOrganization(OrganizationRequest $organizationsRequest): void
+    public function newOrganization(OrganizationRequest $organizationRequest): void
     {
-        $organizations = new Organization();
+        $organization = new Organization();
 
-        $organizations->setName($organizationsRequest->getName());
-        $organizations->setDesigner($organizationsRequest->getDesigner());
-        $organizations->setEmployees($organizationsRequest->getEmployees());
+        $organization->setName($organizationRequest->getName());
+        $organization->setDesigner($organizationRequest->getDesigner());
+        $organization->setEmployees($organizationRequest->getEmployees());
 
-        $this->em->persist($organizations);
+        $this->em->persist($organization);
         $this->em->flush();
     }
 
-    private function map(Organization $organizations): OrganizationListItems
+    private function map(Organization $organization): OrganizationListItems
     {
         return (new OrganizationListItems())
-            ->setId($organizations->getId())
-            ->setName($organizations->getName())
-            ->setDesigner($organizations->getDesigner())
-            ->setEmployees($organizations->getEmployees());
+            ->setId($organization->getId())
+            ->setName($organization->getName())
+            ->setDesigner($organization->getDesigner())
+            ->setEmployees($organization->getEmployees());
     }
 }

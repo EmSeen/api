@@ -5,6 +5,7 @@ namespace App\Tests;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Helmich\JsonAssert\JsonAssertions;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -25,7 +26,7 @@ abstract class AbstractControllerTest extends WebTestCase
 
         $this->client = static::createClient();
         $this->em = self::getContainer()->get('doctrine.orm.entity_manager');
-        $this->hasher = self::getContainer()->getParameter('security.user_password_hasher');
+        $this->hasher = self::getContainer()->get('security.user_password_hasher');
     }
 
     protected function tearDown(): void
@@ -83,4 +84,10 @@ abstract class AbstractControllerTest extends WebTestCase
 
         return $user;
     }
+
+    #[Pure] protected function generateRandomEmail($length = 10): string {
+        $string = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+        return $string . '@mail.ru';
+    }
+
 }

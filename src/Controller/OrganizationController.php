@@ -15,14 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrganizationController extends AbstractController
 {
-    public function __construct(private OrganizationService $organizationsService)
+    public function __construct(private OrganizationService $organizationService)
     {
     }
 
     /**
      * Создание организаций.
      *
-     * @OA\Tag(name="Organizations")
+     * @OA\Tag(name="Organization")
      *
      * @OA\RequestBody(@Model(type=OrganizationRequest::class))
      *
@@ -39,21 +39,21 @@ class OrganizationController extends AbstractController
      *     )
      * )
      *
-     * @param OrganizationRequest $organizationsRequest
+     * @param OrganizationRequest $organizationRequest
      * @return Response
      */
     #[Route(path: '/api/v1/newOrganization', methods: ['POST'])]
-    public function new(#[RequestBody] OrganizationRequest $organizationsRequest): Response
+    public function new(#[RequestBody] OrganizationRequest $organizationRequest): Response
     {
-        $this->organizationsService->newOrganization($organizationsRequest);
+        $this->organizationService->newOrganization($organizationRequest);
 
-        return $this->json('Создана запись '.$organizationsRequest)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        return $this->json('Создана запись '.$organizationRequest)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
     /**
      * Список организаций.
      *
-     * @OA\Tag(name="Organizations")
+     * @OA\Tag(name="Organization")
      *
      * @OA\Response(
      *     response=200,
@@ -64,7 +64,7 @@ class OrganizationController extends AbstractController
     #[Route(path: '/api/v1/listOrganizations', methods: ['GET'])]
     public function list(): Response
     {
-        $response = $this->json($this->organizationsService->getOrganizations());
+        $response = $this->json($this->organizationService->getOrganizations());
         $response->setEncodingOptions(JSON_UNESCAPED_UNICODE);
 
         return $response;
@@ -73,7 +73,7 @@ class OrganizationController extends AbstractController
     /**
      * Просмотр организации.
      *
-     * @OA\Tag(name="Organizations")
+     * @OA\Tag(name="Organization")
      *
      * @OA\Response(
      *     response=200,
@@ -92,6 +92,6 @@ class OrganizationController extends AbstractController
     #[Route(path: '/api/v1/showOrganization/{id}', methods: ['GET'])]
     public function show(int $id): Response
     {
-        return $this->json($this->organizationsService->getOrganization($id))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        return $this->json($this->organizationService->getOrganization($id))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }
