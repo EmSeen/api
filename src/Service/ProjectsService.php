@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Entity\Projects;
 use App\Exception\ProjectNotFoundException;
 use App\Model\ProjectRequest;
-use App\Model\ProjectsListItems;
+use App\Model\ProjectsListItem;
 use App\Model\ProjectsListResponse;
 use App\Repository\ProjectsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,9 +55,9 @@ class ProjectsService
         $this->em->flush();
     }
 
-    private function map(Projects $projects): ProjectsListItems
+    private function map(Projects $projects): ProjectsListItem
     {
-        return (new ProjectsListItems())
+        return (new ProjectsListItem())
             ->setId($projects->getId())
             ->setName($projects->getName())
             ->setDescription($projects->getDescription())

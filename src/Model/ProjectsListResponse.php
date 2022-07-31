@@ -5,14 +5,14 @@ namespace App\Model;
 class ProjectsListResponse
 {
     /**
-     * @var ProjectsListItems[]
+     * @var ProjectsListItem[]
      */
     private array $items;
 
     /**
      * OrganizationsListResponse constructor.
      *
-     * @param ProjectsListItems[] $items
+     * @param ProjectsListItem[] $items
      */
     public function __construct(array $items)
     {
@@ -20,7 +20,7 @@ class ProjectsListResponse
     }
 
     /**
-     * @return ProjectsListItems[]
+     * @return ProjectsListItem[]
      */
     public function getItems(): array
     {

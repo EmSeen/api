@@ -1,0 +1,28 @@
+#version: "3.9"
+#
+#services:
+#  database-test:
+#    container_name: postgres-test
+#    image: postgres:13.3-alpine
+#    environment:
+#      POSTGRES_DB: api_test
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: 12345
+#      POSTGRES_HOST_AUTH_METHOD: trust
+#    ports:
+#      - "5431:5432"
+
+#version: "3.9"
+#
+#services:
+#  database-test:
+#    container_name: api-test-db
+#    image: mysql:8.0
+#    command: --default-authentication-plugin=mysql_native_password
+#    environment:
+#      MYSQL_ROOT_PASSWORD: secret
+#      MYSQL_DATABASE: api_test
+#      MYSQL_USER: symfony
+#      MYSQL_PASSWORD: symfony
+#    ports:
+#      - '4305:3306'

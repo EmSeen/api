@@ -84,5 +84,4 @@ class OrganizationsControllerTest extends AbstractControllerTest
         $this->assertResponseIsSuccessful();
     }
 
-
 }

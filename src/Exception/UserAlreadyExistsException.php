@@ -8,6 +8,6 @@ class UserAlreadyExistsException extends RuntimeException
 {
     public function __construct()
     {
-        parent::__construct('Пользователь уже существует');
+        parent::__construct('User already exists');
     }
 }

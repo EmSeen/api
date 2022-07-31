@@ -10,7 +10,7 @@ class ValidationException extends RuntimeException
 {
     #[Pure] public function __construct(private ConstraintViolationListInterface $violations)
     {
-        parent::__construct('Проверка не удалась');
+        parent::__construct('validation failed');
     }
 
     public function getViolations(): ConstraintViolationListInterface

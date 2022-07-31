@@ -10,6 +10,6 @@ class ProjectNotFoundException extends RuntimeException
     #[Pure]
     public function __construct()
     {
-        parent::__construct('Такого проекта не существует');
+        parent::__construct('Project Not Found');
     }
 }
