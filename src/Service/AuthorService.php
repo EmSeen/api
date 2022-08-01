@@ -3,12 +3,15 @@
 namespace App\Service;
 
 use App\Entity\Project;
+use App\Exception\ProjectNotFoundException;
+use App\Mapper\ProjectMapper;
 use App\Model\Author\CreateProjectRequest;
 use App\Model\Author\ProjectListResponse;
-use App\Model\Author\ProjectListItems;
 use App\Model\IdResponse;
+use App\Model\ProjectDetails;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
 
 class AuthorService
@@ -19,14 +22,34 @@ class AuthorService
     {
     }
 
+    public function getProject(int $id): ProjectListResponse
+    {
+        $user = $this->security->getUser();
+
+        if (!$this->projectRepository->existById($id)) {
+            throw new ProjectNotFoundException();
+        }
+
+        if (!$this->projectRepository->existsByUser($id, $user)) {
+            throw new AccessDeniedException('Access denied');
+        }
+
+        return new ProjectListResponse(
+            array_map(
+                fn (Project $project) => ProjectMapper::map($project, new ProjectDetails()),
+                $this->projectRepository->getUserProjectsById($id, $user)
+            )
+        );
+    }
+
     public function getProjects(): ProjectListResponse
     {
         $user = $this->security->getUser();
 
         return new ProjectListResponse(
             array_map(
-                [$this, 'map'],
-                $this->projectRepository->findUserProjects($user)
+                fn (Project $project) => ProjectMapper::map($project, new ProjectDetails()),
+                $this->projectRepository->userProjects($user)
             )
         );
     }
@@ -45,19 +68,13 @@ class AuthorService
 
     public function deleteProject(int $id): void
     {
-        $book = $this->projectRepository->getUserProjectsById($id, $this->security->getUser());
+        if (!$this->projectRepository->existById($id)) {
+            throw new ProjectNotFoundException();
+        }
 
-        $this->em->remove($book);
+        $project = $this->projectRepository->delUserProjectsById($id, $this->security->getUser());
+
+        $this->em->remove($project);
         $this->em->flush();
-    }
-
-    private function map(Project $project): ProjectListItems
-    {
-        return (new ProjectListItems())
-            ->setId($project->getId())
-            ->setName($project->getName())
-            ->setDescription($project->getDescription())
-            ->setStartDate($project->getStartDate())
-            ->setEndDate($project->getEndDate());
     }
 }

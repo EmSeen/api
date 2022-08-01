@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Organization;
 use App\Exception\OrganizationNotFoundException;
+use App\Mapper\OrganizationMapper;
 use App\Model\OrganizationListItems;
 use App\Model\OrganizationListResponse;
 use App\Model\OrganizationRequest;
@@ -15,14 +16,15 @@ class OrganizationService
     public function __construct(
         private OrganizationRepository $organizationRepository,
         private EntityManagerInterface $em
-    ) {
+    )
+    {
     }
 
     public function getOrganizations(): OrganizationListResponse
     {
         return new OrganizationListResponse(
             array_map(
-                [$this, 'map'],
+                fn (Organization $organization) => OrganizationMapper::map($organization, new OrganizationListItems()),
                 $this->organizationRepository->organizationsList()
             )
         );
@@ -36,7 +38,7 @@ class OrganizationService
 
         return new OrganizationListResponse(
             array_map(
-                [$this, 'map'],
+                fn (Organization $organization) => OrganizationMapper::map($organization, new OrganizationListItems()),
                 $this->organizationRepository->findOrganizationById($id)
             )
         );
@@ -52,14 +54,5 @@ class OrganizationService
 
         $this->em->persist($organization);
         $this->em->flush();
-    }
-
-    private function map(Organization $organization): OrganizationListItems
-    {
-        return (new OrganizationListItems())
-            ->setId($organization->getId())
-            ->setName($organization->getName())
-            ->setDesigner($organization->getDesigner())
-            ->setEmployees($organization->getEmployees());
     }
 }

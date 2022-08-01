@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\Project;
 use App\Exception\ProjectNotFoundException;
-use App\Model\ProjectRequest;
+use App\Mapper\ProjectMapper;
 use App\Model\ProjectListItem;
 use App\Model\ProjectListResponse;
 use App\Repository\ProjectRepository;
@@ -21,11 +21,12 @@ class ProjectService
     {
         return new ProjectListResponse(
             array_map(
-                [$this, 'map'],
+                fn (Project $project) => ProjectMapper::map($project, new ProjectListItem()),
                 $this->projectRepository->projectsList()
             )
         );
     }
+
 
     public function getProject(int $id): ProjectListResponse
     {
@@ -35,19 +36,9 @@ class ProjectService
 
         return new ProjectListResponse(
             array_map(
-                [$this, 'map'],
-                $this->projectRepository->findProjectById($id)
+                fn (Project $project) => ProjectMapper::map($project, new ProjectListItem()),
+                $this->projectRepository->projectById($id)
             )
         );
-    }
-
-    private function map(Project $project): ProjectListItem
-    {
-        return (new ProjectListItem())
-            ->setId($project->getId())
-            ->setName($project->getName())
-            ->setDescription($project->getDescription())
-            ->setStartDate($project->getStartDate())
-            ->setEndDate($project->getEndDate());
     }
 }

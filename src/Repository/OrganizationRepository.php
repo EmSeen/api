@@ -4,12 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Organization;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Organization>
- *
  * @method Organization|null find($id, $lockMode = null, $lockVersion = null)
  * @method Organization|null findOneBy(array $criteria, array $orderBy = null)
  * @method Organization[]    findAll()
@@ -23,21 +20,22 @@ class OrganizationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Organization[]
+     * Список всех организаций
+     * @return mixed
      */
-    public function findAllSortedByName(): array
-    {
-        return $this->findBy([], ['name' => Criteria::ASC]);
-    }
-
-    public function organizationsList()
+    public function organizationsList(): mixed
     {
         $query = $this->_em->createQuery('SELECT o FROM App\Entity\Organization o');
 
         return $query->getResult();
     }
 
-    public function findOrganizationById(int $id)
+    /**
+     * Выборка организаций по id
+     * @param int $id
+     * @return mixed
+     */
+    public function findOrganizationById(int $id): mixed
     {
         $query = $this->_em->createQuery('SELECT o FROM App\Entity\Organization o WHERE :id = o.id ');
         $query->setParameter('id', $id);
@@ -45,6 +43,11 @@ class OrganizationRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Проверка существует ли такая организация по id
+     * @param int $id
+     * @return bool
+     */
     public function existById(int $id): bool
     {
         return null !== $this->find($id);

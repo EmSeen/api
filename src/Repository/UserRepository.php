@@ -20,11 +20,21 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * Проверка сущесвует ли такой email
+     * @param string $email
+     * @return bool
+     */
     public function existsByEmail(string $email): bool
     {
         return null !== $this->findOneBy(['email' => $email]);
     }
 
+    /**
+     * Выбор юзера по id
+     * @param int $userId
+     * @return User
+     */
     public function getUser(int $userId): User
     {
         $user = $this->find($userId);

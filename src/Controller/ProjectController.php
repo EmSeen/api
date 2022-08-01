@@ -16,7 +16,7 @@ class ProjectController extends AbstractController
     public function __construct(private ProjectService $projectService)
     {
     }
-    
+
     /**
      * Список проектов.
      *
@@ -29,7 +29,7 @@ class ProjectController extends AbstractController
      * )
      */
     #[Route(path: '/api/v1/listProjects', methods: ['GET'])]
-    public function list(): Response
+    public function listProjects(): Response
     {
         return $this->json($this->projectService->getProjects())->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
@@ -54,7 +54,7 @@ class ProjectController extends AbstractController
      * @return Response
      */
     #[Route(path: '/api/v1/showProject/{id}', methods: ['GET'])]
-    public function show(int $id): Response
+    public function showProject(int $id): Response
     {
         return $this->json($this->projectService->getProject($id))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }

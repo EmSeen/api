@@ -7,8 +7,7 @@ use App\Tests\AbstractControllerTest;
 
 class ProjectControllerTest extends AbstractControllerTest
 {
-
-    public function testList(): void
+    public function testListProjects(): void
     {
         $this->em->persist(
             (
@@ -27,30 +26,11 @@ class ProjectControllerTest extends AbstractControllerTest
         $this->assertResponseIsSuccessful();
         $this->assertJsonDocumentMatchesSchema(
             $responseContent,
-            [
-                'type' => 'object',
-                'required' => ['items'],
-                'properties' => [
-                    'items' => [
-                        'type' => 'array',
-                        'items' => [
-                            'type' => 'object',
-                            'required' => ['id', 'name', 'description', 'startDate', 'endDate'],
-                            'properties' => [
-                                'names' => ['type' => 'string'],
-                                'description' => ['type' => 'string'],
-                                'startDate' => ['type' => 'string'],
-                                'endDate' => ['type' => 'string'],
-                                'id' => ['type' => 'integer']
-                            ],
-                        ],
-                    ],
-                ],
-            ]
+            $this->sheme()
         );
     }
 
-    public function testShow(): void
+    public function testShowProject(): void
     {
         $this->client->request('GET', '/api/v1/showProject/2');
         $responseContent = json_decode($this->client->getResponse()->getContent(), true);
@@ -58,27 +38,31 @@ class ProjectControllerTest extends AbstractControllerTest
         $this->assertResponseIsSuccessful();
         $this->assertJsonDocumentMatchesSchema(
             $responseContent,
-            [
-                'type' => 'object',
-                'required' => ['items'],
-                'properties' => [
-                    'items' => [
-                        'type' => 'array',
-                        'items' => [
-                            'type' => 'object',
-                            'required' => ['id', 'name', 'description', 'startDate', 'endDate'],
-                            'properties' => [
-                                'names' => ['type' => 'string'],
-                                'description' => ['type' => 'string'],
-                                'startDate' => ['type' => 'string'],
-                                'endDate' => ['type' => 'string'],
-                                'id' => ['type' => 'integer']
-                            ],
-                        ],
-                    ],
-                ],
-            ]
+            $this->sheme()
         );
     }
 
+    private function sheme(): array
+    {
+        return [
+            'type' => 'object',
+            'required' => ['items'],
+            'properties' => [
+                'items' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'object',
+                        'required' => ['id', 'name', 'description', 'startDate', 'endDate'],
+                        'properties' => [
+                            'names' => ['type' => 'string'],
+                            'description' => ['type' => 'string'],
+                            'startDate' => ['type' => 'string'],
+                            'endDate' => ['type' => 'string'],
+                            'id' => ['type' => 'integer']
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
 }

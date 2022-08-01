@@ -13,6 +13,7 @@ use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use App\Model\ErrorResponse;
 use App\Model\IdResponse;
+use App\Model\Author\ProjectListResponse;
 
 class AuthorController extends AbstractController
 {
@@ -27,12 +28,13 @@ class AuthorController extends AbstractController
      *
      * @OA\Response(
      *     response=200,
-     *     description="Возвращает при успехе"
+     *     description="Возвращает при успехе",
+     *     @Model(type=ProjectListResponse::class)
      * )
      */
     #[Security(name: 'Bearer')]
-    #[Route(path: '/api/v1/author/projects', methods: ['GET'])]
-    public function project(): Response
+    #[Route(path: '/api/v1/author/listProjects', methods: ['GET'])]
+    public function listProjects(): Response
     {
         return $this->json($this->authorService->getProjects());
     }
@@ -59,10 +61,36 @@ class AuthorController extends AbstractController
      * @param CreateProjectRequest $request
      * @return Response
      */
-    #[Route(path: '/api/v1/author/project', methods: ['POST'])]
+    #[Route(path: '/api/v1/author/createProject', methods: ['POST'])]
     public function createProject(#[RequestBody] CreateProjectRequest $request): Response
     {
         return $this->json($this->authorService->createProject($request));
+    }
+
+    /**
+     * Просмотр проекта.
+     *
+     * @OA\Tag(name="Author API")
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Возвращает при успехе",
+     *     @Model(type=ProjectListResponse::class)
+     * ),
+     * @OA\Response(
+     *     response=404,
+     *     description="Возвращает при отсутствии записи",
+     *     @Model(type=ErrorResponse::class)
+     *     )
+     * )
+     *
+     * @param int $id
+     * @return Response
+     */
+    #[Route(path: '/api/v1/author/showProject/{id}', methods: ['GET'])]
+    public function showProject(int $id): Response
+    {
+        return $this->json($this->authorService->getProject($id))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -83,7 +111,7 @@ class AuthorController extends AbstractController
      * @param int $id
      * @return Response
      */
-    #[Route(path: '/api/v1/author/project/{id}', methods: ['DELETE'])]
+    #[Route(path: '/api/v1/author/deleteProject/{id}', methods: ['DELETE'])]
     public function deleteProject(int $id): Response
     {
         $this->authorService->deleteProject($id);

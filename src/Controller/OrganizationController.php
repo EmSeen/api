@@ -42,8 +42,8 @@ class OrganizationController extends AbstractController
      * @param OrganizationRequest $organizationRequest
      * @return Response
      */
-    #[Route(path: '/api/v1/newOrganization', methods: ['POST'])]
-    public function new(#[RequestBody] OrganizationRequest $organizationRequest): Response
+    #[Route(path: '/api/v1/createOrganization', methods: ['POST'])]
+    public function createOrganization(#[RequestBody] OrganizationRequest $organizationRequest): Response
     {
         $this->organizationService->newOrganization($organizationRequest);
 
@@ -62,7 +62,7 @@ class OrganizationController extends AbstractController
      * )
      */
     #[Route(path: '/api/v1/listOrganizations', methods: ['GET'])]
-    public function list(): Response
+    public function listOrganizations(): Response
     {
         $response = $this->json($this->organizationService->getOrganizations());
         $response->setEncodingOptions(JSON_UNESCAPED_UNICODE);
@@ -90,7 +90,7 @@ class OrganizationController extends AbstractController
      * @return Response
      */
     #[Route(path: '/api/v1/showOrganization/{id}', methods: ['GET'])]
-    public function show(int $id): Response
+    public function showOrganization(int $id): Response
     {
         return $this->json($this->organizationService->getOrganization($id))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
