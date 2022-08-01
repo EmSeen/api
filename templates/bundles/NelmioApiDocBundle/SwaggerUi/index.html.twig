@@ -31,13 +31,13 @@ https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
 {#    </script>#}
 {#{% endblock %}#}
 
-{# Import your own stylesheet #}
-{#{% block stylesheets %}#}
-{#    {{ parent() }}#}
-{#    <link rel="stylesheet" href="{{ asset('css/custom-swagger-styles.css') }}">#}
-{#{% endblock stylesheets %}#}
+{# Import your own stylesheet#}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('Assets/css/custom-swagger-styles.css') }}">
+{% endblock stylesheets %}
 
-{# Import your own script #}
+{# Import your own script#}
 {#{% block javascripts %}#}
 {#    {{ parent() }}#}
 {#    <script type="text/javascript" src="{{ asset('js/custom-request-signer.js') }}"></script>#}

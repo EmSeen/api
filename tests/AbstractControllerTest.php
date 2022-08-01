@@ -90,4 +90,19 @@ abstract class AbstractControllerTest extends WebTestCase
         return $string . '@mail.ru';
     }
 
+    protected function getUser() : User
+    {
+        return $this->createUser($this->generateRandomEmail(5), 'qwerty123');
+    }
+
+    protected function getAuthor() : User
+    {
+        return $this->createAuthor($this->generateRandomEmail(5), 'qwerty123');
+    }
+
+    protected function getAdmin() : User
+    {
+        return $this->createAdmin($this->generateRandomEmail(5), 'qwerty123');
+    }
+
 }

@@ -21,6 +21,8 @@ class AuthorController extends AbstractController
     }
 
     /**
+     * Список проектов
+     *
      * @OA\Tag(name="Author API")
      *
      * @OA\Response(
@@ -29,13 +31,15 @@ class AuthorController extends AbstractController
      * )
      */
     #[Security(name: 'Bearer')]
-    #[Route(path: '/api/v1/author/project', methods: ['GET'])]
+    #[Route(path: '/api/v1/author/projects', methods: ['GET'])]
     public function project(): Response
     {
         return $this->json($this->authorService->getProjects());
     }
 
     /**
+     * Создать проект
+     *
      * @OA\Tag(name="Author API")
      *
      * @OA\RequestBody(@Model(type=CreateProjectRequest::class))
@@ -62,6 +66,8 @@ class AuthorController extends AbstractController
     }
 
     /**
+     * Удалить проект
+     *
      * @OA\Tag(name="Author API")
      *
      * @OA\Response(

@@ -3,19 +3,13 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Project;
-use App\Entity\User;
 use App\Tests\AbstractControllerTest;
-use phpDocumentor\Reflection\Types\This;
 
 class ProjectControllerTest extends AbstractControllerTest
 {
-    private function getUser() : User
-    {
-        return $this->createUser($this->generateRandomEmail(5), 'qwerty123');
-    }
+
     public function testList(): void
     {
-
         $this->em->persist(
             (
             new Project())
