@@ -1,4 +1,5 @@
 --env=test
+composer require --dev symfony/web-server-bundle 4.*
 
 curl -X POST -H "Content-Type: application/json" http://127.0.0.1:8000/api/v1/auth/login --data {\"username\":\"admin@admin.ru\",\"password\":\"adminadmin\"}
 
